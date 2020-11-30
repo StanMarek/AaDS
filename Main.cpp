@@ -16,7 +16,7 @@ void printArray(int arr[], int size);
 int main() {
 
 	srand(time(NULL));
-	Node* head = nullptr;
+	/*Node* head = nullptr;
 
 	for (int i = 0; i < 15; i++) 
 		sll::addFront(head, RAND);
@@ -50,7 +50,7 @@ int main() {
 		sll::addFront(toMergeSort, RAND);
 	std::cout << "Before mergeSort: ";  sll::show(toMergeSort);
 	sa::ll::mergeSort(toMergeSort);
-	std::cout << "After mergeSort: "; sll::show(toMergeSort);
+	std::cout << "After mergeSort: "; sll::show(toMergeSort);*/
 
 	/*UNDERLINE;
 
@@ -72,7 +72,19 @@ int main() {
 
 	UNDERLINE;
 
-	//system("pause");
+	const int arrSize = 15;
+	int heapArray[arrSize+1];
+	for (int i = 1; i <= arrSize; i++)
+		heapArray[i] = RAND;
+	for (int i = 1; i <= arrSize; i++)
+		std::cout << heapArray[i] << " ";
+	sa::arr::heapSort(heapArray, arrSize);
+	std::cout << std::endl;
+	for (int i = 1; i <= arrSize; i++)
+		std::cout << heapArray[i] << " ";
+	
+
+	system("pause");
 	return 0;
 }
 

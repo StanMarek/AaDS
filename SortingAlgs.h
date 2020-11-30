@@ -10,13 +10,47 @@ namespace sa {
 			*val1 = *val2;
 			*val2 = tmp;
 		}
+		void swap(int val1, int val2) {
+			int tmp = val1;
+			val1 = val2;
+			val2 = tmp;
+		}
+		
+		void heapify(int n, int* arr, int heapSize) {
+			int left = 2 * n;
+			int right = 2 * n + 1;
+			int largest;
 
-		void bubbleSort(int arr[], int arrSize) {
+			if (left <= heapSize && arr[left] > arr[n])
+				largest = left;
+			else
+				largest = n;
+			if (right <= heapSize && arr[right] > arr[largest])
+				largest = right;
+			if (largest != n) {
+				swap(&arr[n], &arr[largest]);
+				heapify(largest, arr, heapSize);
+			}
+		}
+
+		void bubbleSort(int* arr, int arrSize) {
 			for(int i = 0; i < arrSize-1; i++)
 				for (int j = 0; j < arrSize - i - 1; j++) {
 					if (arr[j] > arr[j+1])
 						swap(&arr[j], &arr[j+1]);
 				}
+		}
+		void heapSort(int* arr, int arrSize) {
+			int heapSize = arrSize;
+			
+			for (int i = arrSize / 2 ; i > 0; i--)
+				heapify(i, arr, arrSize);
+
+			while (heapSize > 1) {
+				swap(&arr[1], &arr[heapSize]);
+				heapSize--;
+				heapify(1, arr, heapSize);
+			}
 		}
 	}
 
@@ -84,7 +118,6 @@ namespace sa {
 					tmp = tmp->next;
 				}
 			}
-
 			bubbleSort(head);
 		}
 	}
