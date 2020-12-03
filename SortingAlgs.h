@@ -15,7 +15,6 @@ namespace sa {
 			val1 = val2;
 			val2 = tmp;
 		}
-		
 		void heapify(int n, int* arr, int heapSize) {
 			int left = 2 * n;
 			int right = 2 * n + 1;
@@ -32,6 +31,70 @@ namespace sa {
 				heapify(largest, arr, heapSize);
 			}
 		}
+		long partition(int* arr, long l, long r) {
+			int x = arr[r];
+			long i = l - 1;
+			for (; l < r; ++l) {
+				if (arr[l] <= x)
+					swap(&arr[++i], &arr[l]);
+			}
+			swap(&arr[i + 1], &arr[r]);
+			return i + 1;
+		}
+		long partitionHoare(int* arr, long l, long r) {
+			int x = arr[l];
+			long i = l;
+			long j = r + 1;
+			while (true) {
+				do
+					++i;
+				while (i <= r && arr[i] < x);
+				
+				do
+					--j;
+				while (arr[j] > x);
+				if (i > j)
+					break;
+				swap(&arr[i], &arr[j]);
+			}
+			arr[l] = arr[j];
+			arr[j] = x;
+			return j;
+		}
+		long partitionMed(int* arr, long l, long r) {
+			if (r - l == 1) {
+				if (arr[r] < arr[l])
+					swap(&arr[r], &arr[l]);
+				return l;
+			}
+			swap(&arr[l + 1], &arr[l + r >> 1]);
+
+			if (arr[l + 1] > arr[r])
+				swap(&arr[l + 1], &arr[r]);
+			if (&arr[l] > &arr[r])
+				swap(&arr[l], &arr[r]);
+			if (arr[l + 1] > arr[l])
+				swap(&arr[l + 1], &arr[l]);
+
+			int x = arr[l];
+			long i = l + 1;
+			long j = r;
+			while (true) {
+				do
+					++i;
+				while (arr[i] < x);
+				do
+					--j;
+				while (arr[j] > x);
+
+				if (i > j)
+					break;
+				swap(&arr[i], &arr[j]);
+			}
+			arr[l] = arr[j];
+			arr[j] = x;
+			return j;
+		}
 
 		void bubbleSort(int* arr, int arrSize) {
 			for(int i = 0; i < arrSize-1; i++)
@@ -39,6 +102,20 @@ namespace sa {
 					if (arr[j] > arr[j+1])
 						swap(&arr[j], &arr[j+1]);
 				}
+		}
+		void bubbleSort2(int* arr, long l, long r) {
+			bool isSwapped;
+			for (int i = 0; i < arrSize - 1; i++) {
+				isSwapped = false;
+				for (int j = 0; j < arrSize - 1 - i; j++) {
+					if (arr[j] > arr[j + 1]) {
+						swap(&arr[j], &arr[j + 1]);
+						isSwapped = true;
+					}
+				}
+				if (isSwapped == false)
+					break;
+			}
 		}
 		void heapSort(int* arr, int arrSize) {
 			int heapSize = arrSize;
@@ -52,6 +129,28 @@ namespace sa {
 				heapify(1, arr, heapSize);
 			}
 		}
+		void quickSort(int *arr, long l, long r) {
+			if (l < r) {
+				long p = partition(arr, l, r);
+				//long p = partitionHoare(arr, l, r);
+				//long p = partitionMed(arr, l, r);
+				quickSort(arr, l, p -1);
+				quickSort(arr, l + 1, p);
+			}
+		}
+		void quickSortHybrid(int* arr, long l, long r) {
+			if (r - l > 10) {
+				long p = partition(arr, l, r);
+				//long p = partitionHoare(arr, l, r);
+				//long p = partitionMed(arr, l, r);
+				quickSortHybrid(arr, l, p - 1);
+				quickSortHybrid(arr, l + 1, p);
+			}
+
+			else
+				bubbleSort2(arr, l, r);
+		}
+
 	}
 
 	//linked list

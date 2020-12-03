@@ -76,14 +76,13 @@ int main() {
 	int heapArray[arrSize+1];
 	for (int i = 1; i <= arrSize; i++)
 		heapArray[i] = RAND;
-	for (int i = 1; i <= arrSize; i++)
-		std::cout << heapArray[i] << " ";
-	sa::arr::heapSort(heapArray, arrSize);
-	std::cout << std::endl;
-	for (int i = 1; i <= arrSize; i++)
-		std::cout << heapArray[i] << " ";
+	std::cout << "Before: ";	for (int i = 1; i <= arrSize; i++)
+									std::cout << heapArray[i] << " ";
 	
-
+	sa::arr::heapSort(heapArray, arrSize);
+	std::cout << std::endl << "After: "; for (int i = 1; i <= arrSize; i++)
+											std::cout << heapArray[i] << " ";
+	
 	system("pause");
 	return 0;
 }
