@@ -4,6 +4,7 @@
 #include <chrono>
 #include "SinglyLinkedList.h"
 #include "SortingAlgs.h"
+#include "BinarySearchTree.h"
 
 #define	UNDERLINE\
 	std::cout << "----------------------------------------------" << std::endl;
