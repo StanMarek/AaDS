@@ -1,2 +1,0 @@
-C:\Users\PC\source\repos\AlgorithmsAndDataStructures\Debug\AlgorithmsAndDataStructures.exe
-C:\Users\PC\source\repos\AlgorithmsAndDataStructures\Debug\AlgorithmsAndDataStructures.pdb
