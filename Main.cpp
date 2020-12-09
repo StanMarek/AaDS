@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <chrono>
 #include "SinglyLinkedList.h"
 #include "SortingAlgs.h"
 
@@ -8,6 +9,7 @@
 	std::cout << "----------------------------------------------" << std::endl;
 #define RAND\
 	rand()%99+0
+#define HUGE_ARR 1000000
 
 using sll::Node;
 
@@ -81,7 +83,46 @@ int main() {
 	
 	sa::arr::heapSort(heapArray, arrSize);
 	std::cout << std::endl << "After: "; for (int i = 1; i <= arrSize; i++)
-											std::cout << heapArray[i] << " ";
+									std::cout << heapArray[i] << " "; std::cout << std::endl;
+
+	UNDERLINE;
+
+	long* bigArr1 = new long[HUGE_ARR];
+	long* bigArr2 = new long[HUGE_ARR];
+	long* bigArr3 = new long[HUGE_ARR];
+	long val;
+	for (int i = 0; i < HUGE_ARR; i++) {
+		val = rand() % HUGE_ARR;
+		bigArr1[i] = val;
+		bigArr2[i] = val;
+		bigArr3[i] = val;
+	}
+	
+	std::cout << "Czas dzialania: " << std::endl;
+	
+	auto t1 = std::chrono::high_resolution_clock::now();
+	sa::arr::quickSort(bigArr1, 0, HUGE_ARR - 1);
+	auto t2 = std::chrono::high_resolution_clock::now();
+	auto durationQs = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+	std::cout << "QSN: " << durationQs << std::endl;
+
+	t1 = std::chrono::high_resolution_clock::now();
+	sa::arr::quickSortHybrid(bigArr2, 0, HUGE_ARR - 1);
+	t2 = std::chrono::high_resolution_clock::now();
+	auto durationQsh = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+	std::cout << "QSH: " << durationQsh << std::endl;
+
+	t1 = std::chrono::high_resolution_clock::now();
+	sa::arr::bubbleSortOptimized(bigArr3, HUGE_ARR - 1);
+	t2 = std::chrono::high_resolution_clock::now();
+	auto durationBs = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+	std::cout << "BS:  " << durationBs << std::endl;
+
+	
+	
+	delete [] bigArr1;
+	delete [] bigArr2;
+	delete [] bigArr3;
 	
 	system("pause");
 	return 0;

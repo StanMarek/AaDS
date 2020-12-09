@@ -11,6 +11,11 @@ namespace sa {
 			*val1 = *val2;
 			*val2 = tmp;
 		}
+		void swap(long* val1, long* val2) {
+			long tmp = *val1;
+			*val1 = *val2;
+			*val2 = tmp;
+		}
 		void swap(int val1, int val2) {
 			int tmp = val1;
 			val1 = val2;
@@ -32,8 +37,8 @@ namespace sa {
 				heapify(largest, arr, heapSize);
 			}
 		}
-		long partition(int* arr, long l, long r) {
-			int x = arr[r];
+		long partition(long* arr, long l, long r) {
+			long x = arr[r];
 			long i = l - 1;
 			for (; l < r; ++l) {
 				if (arr[l] <= x)
@@ -104,11 +109,27 @@ namespace sa {
 						swap(&arr[j], &arr[j+1]);
 				}
 		}
-		void bubbleSort2(int* arr, long l, long r) {
+		void bubbleSortOptimized(long* arr, long arrSize) {
 			bool isSwapped;
+			
+			for (long i = 0; i < arrSize - 1; i++) {
+				isSwapped = false;
+				for (long j = 0; j < arrSize - 1 - i; j++) {
+					if (arr[j] > arr[j + 1]) {
+						swap(&arr[j], &arr[j + 1]);
+						isSwapped = true;
+					}
+				}
+				if (isSwapped == false)
+					break;
+			}
+		}
+		void bubbleSortOptimized(long* arr, long l, long r) {
+			bool isSwapped;
+			int arrSize = r - l + 1;
 			for (int i = 0; i < arrSize - 1; i++) {
 				isSwapped = false;
-				for (int j = 0; j < arrSize - 1 - i; j++) {
+				for (int j = l; j < arrSize - 1 - i; j++) {
 					if (arr[j] > arr[j + 1]) {
 						swap(&arr[j], &arr[j + 1]);
 						isSwapped = true;
@@ -130,7 +151,7 @@ namespace sa {
 				heapify(1, arr, heapSize);
 			}
 		}
-		void quickSort(int *arr, long l, long r) {
+		void quickSort(long *arr, long l, long r) {
 			if (l < r) {
 				long p = partition(arr, l, r);
 				//long p = partitionHoare(arr, l, r);
@@ -139,7 +160,7 @@ namespace sa {
 				quickSort(arr, l + 1, p);
 			}
 		}
-		void quickSortHybrid(int* arr, long l, long r) {
+		void quickSortHybrid(long* arr, long l, long r) {
 			if (r - l > 10) {
 				long p = partition(arr, l, r);
 				//long p = partitionHoare(arr, l, r);
@@ -149,7 +170,10 @@ namespace sa {
 			}
 
 			else
-				bubbleSort2(arr, l, r);
+				bubbleSortOptimized(arr, l, r);
+		}
+		void quickSortGeneral(long* arr, long arrSize) {
+			quickSortHybrid(arr, 0, arrSize - 1);
 		}
 
 	}
