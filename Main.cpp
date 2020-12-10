@@ -10,7 +10,7 @@
 	std::cout << "----------------------------------------------" << std::endl;
 #define RAND\
 	rand()%99+0
-#define HUGE_ARR 1000000
+#define HUGE_ARR 1000
 
 using sll::Node;
 
@@ -19,7 +19,7 @@ void printArray(int arr[], int size);
 int main() {
 
 	srand(time(NULL));
-	/*Node* head = nullptr;
+	Node* head = nullptr;
 
 	for (int i = 0; i < 15; i++) 
 		sll::addFront(head, RAND);
@@ -53,7 +53,7 @@ int main() {
 		sll::addFront(toMergeSort, RAND);
 	std::cout << "Before mergeSort: ";  sll::show(toMergeSort);
 	sa::ll::mergeSort(toMergeSort);
-	std::cout << "After mergeSort: "; sll::show(toMergeSort);*/
+	std::cout << "After mergeSort: "; sll::show(toMergeSort);
 
 	/*UNDERLINE;
 
@@ -92,7 +92,7 @@ int main() {
 	long* bigArr2 = new long[HUGE_ARR];
 	long* bigArr3 = new long[HUGE_ARR];
 	long val;
-	for (int i = 0; i < HUGE_ARR; i++) {
+	for (long i = 0; i < HUGE_ARR; i++) {
 		val = rand() % HUGE_ARR;
 		bigArr1[i] = val;
 		bigArr2[i] = val;

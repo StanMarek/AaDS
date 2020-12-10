@@ -39,10 +39,10 @@ namespace sa {
 		}
 		long partition(long* arr, long l, long r) {
 			long x = arr[r];
-			long i = l - 1;
-			for (; l < r; ++l) {
-				if (arr[l] <= x)
-					swap(&arr[++i], &arr[l]);
+			long i = l-1;
+			for (long j = l; j <= r-1; j++) {
+				if (arr[j] <= x)
+					swap(&arr[++i], &arr[j]);
 			}
 			swap(&arr[i + 1], &arr[r]);
 			return i + 1;
@@ -127,6 +127,7 @@ namespace sa {
 		void bubbleSortOptimized(long* arr, long l, long r) {
 			bool isSwapped;
 			int arrSize = r - l + 1;
+
 			for (int i = 0; i < arrSize - 1; i++) {
 				isSwapped = false;
 				for (int j = l; j < arrSize - 1 - i; j++) {

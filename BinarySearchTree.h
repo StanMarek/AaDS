@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace bst {
 
     struct treeNodeBST {
