@@ -7,6 +7,10 @@ public class LinkedList {
         head = null;
     }
 
+    public boolean isEmpty(){
+        return head == null;
+    }
+
     public void add(int x){
         Node newNode = new Node();
         newNode.val = x;
