@@ -148,7 +148,7 @@ int main() {
 	gr::Node** LN = gr::createLN(rozmiar);
 
 
-	system("pause");
+	std::cin.get();
 	return 0;
 }
 
