@@ -145,8 +145,8 @@ int main() {
 
 	UNDERLINE;
 
-	gr::Node** LN = gr::createLN(rozmiar);
 
+	printf("printf");
 
 	std::cin.get();
 	return 0;
