@@ -51,14 +51,9 @@ namespace gr {
 
 		return LN;
 	}
-	// void print_ln(Node* arr[], int size){
-	// 	std::cout << "List of neighbourhood" << std::endl;
-
-	// 	for(int i = 0; i < size; i++){
-	// 		std::cout << "[ " << i+1 << " ] -> " << arr[i].to << " ; " << arr[i].dis << std::endl;
-	// 	}
-
-	// }
+	void printLn(Node* list){
+		
+	}
 
 	struct Node2 {
 		int to;

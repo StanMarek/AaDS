@@ -19,8 +19,8 @@
 void printArray(int arr[], int size);
 void printMatrix(int* arr, int size);
 
-int main() {
-
+int main()
+{
 	/*srand(time(NULL));
 	Node* head = nullptr;
 
@@ -135,20 +135,31 @@ int main() {
 	//sa::arr::mergeSort<int>(tablica, 10);
 	//printArray(tablica, 10);
 
-	int rozmiar;
-	int** matrix = gr::createMatrix(rozmiar);
-	for (int i = 0; i < rozmiar; i++) {
-		for (int j = 0; j < rozmiar; j++)
+	int size;
+	int** matrix = gr::createMatrix(size);
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
 			std::cout << matrix[i][j] << "	";
 		std::cout << std::endl;
 	}
 
 	UNDERLINE;
 
+	gr::Node** LN = gr::createLN(size);
+	for (int i = 0; i < size; i++){
+		std::cout << i << "-> ";
+		while(LN[i]->ng != nullptr){
+			std::cout << "to:" << LN[i]->to << "dis:" << LN[i]->dis;
+		}
+		std::cout << std::endl;
+	}
 
-	printf("printf");
+	UNDERLINE;
 
-	std::cin.get();
+	delete[] matrix;
+	delete[] LN;
+
 	return 0;
 }
 
