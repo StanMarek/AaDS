@@ -33,6 +33,7 @@ void test_ln_graph();
 void test_le_graph();
 void test_graphs();
 void test_Prim();
+void test_Kruskal();
 
 
 int main()
@@ -40,8 +41,9 @@ int main()
 	srand(time(NULL));
 	_size();
 	UNDERLINE;
-
 	test_Prim();
+	UNDERLINE;
+	test_Kruskal();
 
 	return 0;
 }
@@ -228,6 +230,11 @@ void test_graphs()
 void test_Prim()
 {
 	gr::NodeNeigh** ln = gr::createListOfNeighbourhood(size);
-	gr::NodeEdge* prim = gr::PrimsAlgorithm(ln, size, 6);
-	gr::print_le(prim);
+	gr::PrimsAlgorithm(ln, size, 1);
+}
+
+void test_Kruskal()
+{
+	gr::NodeEdge* le = gr::createListOfEdges(size);
+	gr::KruskalsAlgorithm(le, size);
 }
