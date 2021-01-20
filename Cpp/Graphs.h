@@ -120,32 +120,33 @@ namespace gr {
 	}
 	void PrimsAlgorithm(NodeNeigh** ln, int size, int start = 0) {
 
-		NodeEdge* outcome = nullptr;
-		bool* visited = new bool[size];
+		NodeEdge* outcome = nullptr; //lista krawedzi drzewa rozpinajacego
+		bool* visited = new bool[size];	//tablica odwiedzonych wiercholkow
 		for (int i = 0; i < size; i++)
-			visited[i] = false;
-		visited[start] = true;
+			visited[i] = false;	//inicjajacja wierzcholkow jako nieodwiedzonych
+		visited[start] = true;	//startowy -> odwiedzony
 
-		int minimum = -1;
-		int startEdge;
-		int endEdge;
-
-		do {
-
+		do {	//petla wykonuje sie dopoki wszystkie wiercholki nie zostana odwiedzone
+			int minimum = -1;	//"waga krawedzi null"
+			int startEdge;
+			int endEdge;
 			for (int i = 0; i < size; i++) {
-				if (visited[i] == true) {
+				if (visited[i] == true) {	//jesli wierzcholek jest odwiedzony odwiedzamy jego sasiadow
 					NodeNeigh* newNode = ln[i];
 					while (newNode) {
 						if (minimum == -1 && visited[newNode->to] == false) {
-							minimum = newNode->dis;
-							endEdge = newNode->to;
+							//jesli wierzcholek nastepny jest nieodwiedzony
+							minimum = newNode->dis;	//zmiana wartosci minimum na minimum z krawedzi
+							endEdge = newNode->to;	
 							startEdge = i;
 							newNode = newNode->ng;
 						}
 						else if (minimum == -1 && visited[newNode->to] == true) {
+							//jesli nastepny wierzcholek jest odwiedzony
 							newNode = newNode->ng;
 						}
 						else if (minimum > newNode->dis && visited[newNode->to] == false) {
+							//jesli nastepny wiercholek jest nieodwiedzony i nie ma krawedzi miedzy nimi
 							minimum = newNode->dis;
 							endEdge = newNode->to;
 							startEdge = i;
@@ -157,8 +158,8 @@ namespace gr {
 				}
 			}
 
-			visited[endEdge] = true;
-			AddEdgeNode(outcome, startEdge, endEdge, minimum);
+			visited[endEdge] = true;	//wiercholek od ostatniej krawedzi zostaje odwiedzony
+			AddEdgeNode(outcome, startEdge, endEdge, minimum);	//dodajemy do listy krawedzi drzewa rozpinajacego przeszukany wierzcholek
 
 		} while (everyNodeVisited(visited, size));
 
@@ -213,42 +214,45 @@ namespace gr {
 	}
 
 	void KruskalsAlgorithm(NodeEdge* le, int size) {
-		sorting(le);
-		NodeEdge* outcome = nullptr;
+		sorting(le);	//nalezy posortowac wprowadzona liste krawedzi
+		NodeEdge* outcome = nullptr;	//tu zapisuje sie minimalne drzewo rozpinajace
 		NodeEdge* p;
-		int* lasy = new int[size];
-		int las = 0;
-		bool* visited = new bool[size];
+		int* lasy = new int[size];	//tablica lasow
+		int las = 0;	//numer lasu
+		bool* visited = new bool[size];	//tablica wiercholkow (czy odwiedzone)
 		for (int i = 0; i < size; i++) {
-			lasy[i] = 0;
-			visited[i] = false;
+			lasy[i] = 0;	//zerujemy lasy
+			visited[i] = false;	//deklarujemy ze wierzcholki nie byly odwiedzone
 		}
 
-		while (le)
+		while (le)	//petla wykonuje sie dopoki lista krawedzi nie dobiegnie konca
 		{
-			if (visited[le->to] == false && visited[le->from] == false) {
-				visited[le->to] = true;
-				visited[le->from] = true;
-				las += 1;
-				lasy[le->to] = las;
+			if (visited[le->to] == false && visited[le->from] == false) {	//jesli wiercholek startowy i nastepny nie sa odwiedzone
+				visited[le->to] = true;	//wiercholek sasiedni jest odwiedzony
+				visited[le->from] = true;	//wiercholek startowy jest odwiedzony
+				las += 1;	//inkremenrujemy numer lasu
+				lasy[le->to] = las;	//przypisujemy do wierzcholka sasiedniego i satartowego numer tego samego lasu
 				lasy[le->from] = las;
-
-				p = le;
+				
+				//dodajemy drzewa rozpinajacego nowy wiercholek i krawedzie
+				p = le;	
 				le = le->ng;
 				p->ng = outcome;
 				outcome = p;
 			}
-			else if (visited[le->to] == true && visited[le->from] == true) {
-				if (lasy[le->to] != lasy[le->from]) {
-					las = lasy[le->to] + lasy[le->from];
+			else if (visited[le->to] == true && visited[le->from] == true) {	//jesli sasiad jest odwiedzony i startowy jest odwiedzony
+				if (lasy[le->to] != lasy[le->from]) {	//jesli nie naleza one do tegp samego lasu
+					las = lasy[le->to] + lasy[le->from];	//numer lasu to suma tamtych lasow
 					for (int i = 0; i < size; i++) {
-						if (lasy[i] == lasy[le->to])
+						if (lasy[i] == lasy[le->to])	
 							lasy[i] = las;
 					}
 					for (int i = 0; i < size; i++) {
 						if (lasy[i] == lasy[le->from])
 							lasy[i] = las;
 					}
+
+					//dodajemy do drzewa rozpinajacego nowy wiercholek i krawedzie
 					p = le;
 					le = le->ng;
 					p->ng = outcome;
@@ -261,11 +265,11 @@ namespace gr {
 				}
 			}
 			else if ((visited[le->to] == false && visited[le->from] == true) ||
-				(visited[le->to] == true && visited[le->from] == false)) {
+				(visited[le->to] == true && visited[le->from] == false)) {	//jesli sasiad jest nieodwiedzony i startowy jest odwiedzony lub odwrotnie
 
-				visited[le->to] = true;
+				visited[le->to] = true;	//odwiedzamy wierzcholki
 				visited[le->from] = true;
-				if (visited[le->from] == true)
+				if (visited[le->from] == true)	
 					lasy[le->to] = lasy[le->from];
 				else
 					lasy[le->from] = lasy[le->to];

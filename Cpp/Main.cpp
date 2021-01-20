@@ -35,15 +35,46 @@ void test_graphs();
 void test_Prim();
 void test_Kruskal();
 
+//////////////////////////////////////////////
+//	WYSZUKIWANIE WZORCA W OPARCIU O AUTOMAT	//
+//////////////////////////////////////////////
+
+std::string generateString(int length) {
+	std::string text = "";
+	for (int i = 0; i < length; i++) {
+		text += char(65 + (rand() % 3));
+	}
+	return text;
+}
+std::string uniqueVar(std::string text) {
+	char array[26] = "";
+	std::string outcome = "";
+
+	for (int i = 0; i < text.size(); i++)
+		array[(int)text[i] - 65];
+	for (int i = 0; i < 26; i++)
+		outcome += array[i];
+
+	return outcome;
+}
+int automat(std::string pattern, std::string text) {
+	int positionOfKey = -1;
+	int patternLength = pattern.length();
+	
+	return positionOfKey;
+}
 
 int main()
 {	
 	srand(time(NULL));
-	_size();
+	std::string text = generateString(20);
+	std::string pattern = generateString(7);
+	std::cout << text << std::endl;
+	int position = automat(pattern, text);
 	UNDERLINE;
-	test_Prim();
+	std::cout << pattern << std::endl;
 	UNDERLINE;
-	test_Kruskal();
+	std::cout << uniqueVar(text);
 
 	return 0;
 }
