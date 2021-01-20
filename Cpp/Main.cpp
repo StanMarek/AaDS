@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <chrono>
+#include <string>
 #include "SinglyLinkedList.h"
 #include "SortingAlgs.h"
 #include "BinarySearchTree.h"
@@ -35,10 +36,16 @@ void test_graphs();
 void test_Prim();
 void test_Kruskal();
 
-//////////////////////////////////////////////
-//	WYSZUKIWANIE WZORCA W OPARCIU O AUTOMAT	//
-//////////////////////////////////////////////
-
+///////////////////////////////////////////
+//WYSZUKIWANIE WZORCA W OPARCIU O AUTOMAT//
+///////////////////////////////////////////
+//FIXME: naprawic bo cos nie dziala
+bool isALgAvailable(std::string pattern, std::string text) {
+	if (pattern.length() <= text.length())
+		return true;
+	else
+		return false;
+}
 std::string generateString(int length) {
 	std::string text = "";
 	for (int i = 0; i < length; i++) {
@@ -46,22 +53,56 @@ std::string generateString(int length) {
 	}
 	return text;
 }
-std::string uniqueVar(std::string text) {
-	char array[26] = "";
-	std::string outcome = "";
+int* createTable(std::string pattern) {
+	int* T = new int[pattern.length()];
+	int i = 2;
+	int j = 0;
+	T[0] = -1;
+	T[1] = 0;
 
-	for (int i = 0; i < text.size(); i++)
-		array[(int)text[i] - 65];
-	for (int i = 0; i < 26; i++)
-		outcome += array[i];
+	while(i < pattern.length())	{
+		if (pattern[i - 1] == pattern[j]) {
+			T[i] = j + 1;
+			i++;
+			j++;
+		}
+		else {
+			if (j > 0) {
+				j = T[j];
+			}
+			else {
+				T[i] = 0;
+				i++;
+			}
+		}
+	}
 
-	return outcome;
+	return T;
 }
-int automat(std::string pattern, std::string text) {
-	int positionOfKey = -1;
-	int patternLength = pattern.length();
-	
-	return positionOfKey;
+int automat(std::string text, std::string pattern) {
+	if (!isALgAvailable(pattern, text))
+		return -1;
+	else {
+
+		int m = 0;
+		int i = 0;
+		int* T = createTable(pattern);
+
+		while (m + i < text.length()) {
+			if (pattern[i] == text[m + i]) {
+				i += 1;
+				if (i == pattern.length())
+					return m;
+			}
+			else {
+				m += 1;
+				if (i > 0) {
+					i = T[i];
+				}
+			}
+			return text.length();
+		}
+	}
 }
 
 int main()
@@ -69,12 +110,15 @@ int main()
 	srand(time(NULL));
 	std::string text = generateString(20);
 	std::string pattern = generateString(7);
-	std::cout << text << std::endl;
-	int position = automat(pattern, text);
+	std::cout << "TEXT: " << text << std::endl;
+	std::cout << "PATTERN: " << pattern << std::endl;
+	std::cout << "POSITION: " << automat(text, pattern) << std::endl;
+	
+	/*std::cout << "TEXT: " << "ABC ABCDAB ABCDABCDABDE" << std::endl;
+	std::cout << "PATTERN: " << "ABCDABD" << std::endl;
+	std::cout << "POSITION: " << automat("ABC ABCDAB ABCDABCDABDE", "ABCDABD") << std::endl;*/
 	UNDERLINE;
-	std::cout << pattern << std::endl;
-	UNDERLINE;
-	std::cout << uniqueVar(text);
+	
 
 	return 0;
 }
